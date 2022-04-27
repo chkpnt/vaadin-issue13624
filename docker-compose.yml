@@ -1,0 +1,18 @@
+---
+version: "3"
+
+services:
+  openjdk:
+    build: .
+    environment:
+      - https_proxy=http://squid:3128
+      - http_proxy=http://squid:3128
+    working_dir: /app
+    command: ./build.sh
+    cap_add:
+      - NET_ADMIN
+
+  squid:
+    image: ubuntu/squid:5.2-22.04_beta
+    ports:
+      - 3128:3128
